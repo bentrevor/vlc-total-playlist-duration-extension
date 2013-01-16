@@ -4,7 +4,7 @@
 -- Extension description
 function descriptor()
     return { title = "Playlist total duration" ;
-             version = "1.0" ;
+             version = "1.1" ;
              author = "Ben Trevor" ;
              shortdesc = "Displays dialog box with current playlist's total duration";
              description = "Displays dialog box with current playlist's total duration" ;
@@ -14,19 +14,30 @@ end
 
 -- Activation hook
 function activate()
-  dlg = vlc.dialog("playlist duration")
-  local pl = vlc.playlist.get("playlist", false)
-  local total = 0
+  window = vlc.dialog("playlist duration")
+  window:add_button("refresh", update_duration)
+  time_list = window:add_list()
 
-  for key, value in pairs(pl.children) do
+  get_playlist_duration(pl)
+  window:show()
+end
+
+function update_duration()
+  time_list:clear()
+  get_playlist_duration()
+end
+
+function get_playlist_duration()
+  local total = 0
+  for key, value in pairs(vlc.playlist.get("playlist", false).children) do
     if value.duration ~= -1 then
       total = total + value.duration
     end
   end
-
-  dlg:add_html("<p>" .. seconds_to_time(total) .. "</p>")
-  dlg:show()
+  time_list:add_value(seconds_to_time(total))
+  return total
 end
+
 
 -- convert time to readable format
 function seconds_to_time(seconds)
@@ -65,4 +76,8 @@ end
 -- stop the extension when the dialog window is closed
 function close()
   vlc.deactivate()
+end
+
+-- stops debug error messages, which stops vlc from crashing.  I'm still not sure why...
+function meta_changed()
 end
