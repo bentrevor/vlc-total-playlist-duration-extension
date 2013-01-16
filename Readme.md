@@ -1,0 +1,1 @@
+This is a simple extension I made for VLC Media Player that shows the total duration of the items in the playlist.  I also included my hastily-written python script that can calculate the duration from a .xspf file that is saved from VLC.
