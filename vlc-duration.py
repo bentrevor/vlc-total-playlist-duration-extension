@@ -1,15 +1,33 @@
 from xml.etree.ElementTree import ElementTree
+import sys
 
 xmldoc = ElementTree()
-xmldoc.parse('/home/benjamin/Desktop/vlc_playlist.xspf')
+try:
+  xmldoc.parse(sys.argv[1])
+except IndexError:
+  sys.exit("you must pass the playlist file as a command line argument")
+except:
+  sys.exit("that file probably isn't a .xspf playlist file...")
+
 root = xmldoc.getroot()
 tracklist = root[1]
 
-total_minutes = 0
+total = 0
 
 for track in tracklist:
   for element in track:
     if element.tag.split('}')[1] == 'duration':
-      total_minutes += int(element.text)
+      total += int(element.text)
 
-print total_minutes / 60000
+total /= 1000
+
+hours = total / 3600
+hours_string = "1 hour" if (hours == 1) else str(hours) + " hours"
+
+minutes = (total % 3600) / 60
+minutes_string = "1 minute" if (minutes == 1) else str(minutes) + " minutes"
+
+seconds = total % 60
+seconds_string = "1 second" if (seconds == 1) else str(seconds) + " seconds"
+
+print hours_string + ", " + minutes_string + ", " + seconds_string
