@@ -1,6 +1,11 @@
 -- Playlist total duration
 -- Simple extension that shows the current playlist's total duration
 
+-- Lua scripts are tried in alphabetical order in the user's VLC config directory
+-- lua/{playlist,meta,intf}/ subdirectory on Windows and Mac OS X or in the user's
+-- local share directory (~/.local/share/vlc/lua/... on linux), then in the global
+-- VLC lua/{playlist,meta,intf}/ directory.
+
 -- Extension description
 function descriptor()
     return { title = "Playlist total duration" ;
@@ -18,7 +23,7 @@ function activate()
   window:add_button("refresh", update_duration)
   time_list = window:add_list()
 
-  get_playlist_duration(pl)
+  get_playlist_duration()
   window:show()
 end
 

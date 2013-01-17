@@ -1,3 +1,5 @@
+# Run this script from the command line and pass a .xspf file as the argument
+
 from xml.etree.ElementTree import ElementTree
 import sys
 
