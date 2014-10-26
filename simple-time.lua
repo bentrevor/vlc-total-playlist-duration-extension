@@ -20,15 +20,13 @@ end
 -- Activation hook
 function activate()
   window = vlc.dialog("playlist duration")
-  window:add_button("refresh", update_duration)
-  time_list = window:add_list()
-
+  window:add_button("refresh", update_duration, 1, 1, 1, 1)
+  time_label = window:add_label("", 2, 1, 1, 1)
   get_playlist_duration()
   window:show()
 end
 
 function update_duration()
-  time_list:clear()
   get_playlist_duration()
 end
 
@@ -39,7 +37,7 @@ function get_playlist_duration()
       total = total + value.duration
     end
   end
-  time_list:add_value(seconds_to_time(total))
+  time_label:set_text(seconds_to_time(total))
   return total
 end
 
