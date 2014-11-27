@@ -30,3 +30,5 @@ Here are the steps that @dkamdar took to make it work on OSX:
 3. Then restarted VLC and searched for duration under help menu and Voila! It
 pointed me to the location where the menu item was ... under `VLC -> Extensions
 -> Playlist total duration`.
+
+  ![vlc-extension on OS X](http://i.imgur.com/mcOyadb.png)
